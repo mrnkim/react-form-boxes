@@ -2,17 +2,27 @@ import React, { useLayoutEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import NewBoxForm from "./NewBoxForm";
 import Box from "./Box";
+import './BoxList.css'
+import { click } from "@testing-library/user-event/dist/click";
 
 function BoxList() {
-  // box state
   const [boxes, setBoxes] = useState([]);
 
-  // render boxes
+  function deleteBox(id) {
+    setBoxes(boxes => boxes.filter(box => box.id !== id));
+  }
+
   function renderBoxes() {
     return (
-      <div>
+      <div className="BoxList-container">
         {boxes.map((box) => (
-          <Box />
+          <Box
+            key={box.id} 
+            id={box.id}
+            height={box.height} 
+            width={box.width} 
+            backgroundColor={box.backgroundColor}
+            deleteBox={deleteBox}/>
         ))}
       </div>
     );
@@ -32,3 +42,5 @@ function BoxList() {
     </div>
   );
 }
+
+export default BoxList
